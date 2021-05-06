@@ -2,13 +2,15 @@ from accounts.serializers import UserSerializer
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from accounts.serializers import *
 from rest_framework import exceptions
 from rest_framework_simplejwt.tokens import RefreshToken
 
 # Create your views here.
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def register_view(request):
     if request.method == 'POST':
         user = UserSerializer(data=request.data)
@@ -20,6 +22,7 @@ def register_view(request):
 
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def login_view(request):
     if request.method == 'POST':
         User = get_user_model()
@@ -50,4 +53,7 @@ def login_view(request):
         })
 
 
-        
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def private_view(request):
+    return Response({"message" : "Ah you see me!"})
