@@ -38,6 +38,8 @@ def login_view(request):
             raise exceptions.AuthenticationFailed('Password is not a match')
 
         serialized_user = UserSerializer(user).data
+        # remove password in data
+        del serialized_user['password']
 
         refresh = RefreshToken.for_user(user)
 
