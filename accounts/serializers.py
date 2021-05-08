@@ -4,11 +4,11 @@ from accounts.models import Favourite
 from movies.serializers import MovieSerializer
 
 class FavouriteSerializer(serializers.ModelSerializer):
-    movie = MovieSerializer
+    movie = MovieSerializer(read_only=True)
     class Meta:
-        model = Favourite
-        fields = "__all__"
-        # exclude = ['id','user']
+        model=Favourite
+        # fields = '__all__'
+        exclude = ['user','id']
         
 
 class UserSerializer(serializers.ModelSerializer):

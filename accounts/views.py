@@ -74,7 +74,7 @@ def private_view(request):
 
         try:
             m = Movie.objects.get(pk=movie_id)
-            Favourite.objects.create(movie=m, user=request.user.id)
+            Favourite.objects.create(movie=m, user=request.user)
             return Response({"message" : "Fav Movie is added to user"})
         except ValidationError:
             raise exceptions.ValidationError({"detail":"movie not found or created"})
